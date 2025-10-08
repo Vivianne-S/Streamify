@@ -16,6 +16,8 @@ function toMovie(dto) {
     popularity: dto.popularity,
     voteCount: dto.vote_count,
     originalLanguage: dto.original_language,
+    runtime: dto.runtime, // مدة الفيلم بالدقائق
+    genres: dto.genres || [], // أنواع الأفلام
   };
 }
 
@@ -32,7 +34,7 @@ export async function getGenres() {
   const res = await fetch(`${BASE}/genre/movie/list?api_key=${KEY}&language=en-US`);
   if (!res.ok) throw new Error("Failed to fetch genres");
   const data = await res.json();
-  return data.genres; // مصفوفة من الكائنات {id, name}
+  return data.genres;
 }
 
 /** 🔸 Hämta filmer baserat på genre */

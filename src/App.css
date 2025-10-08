@@ -64,8 +64,6 @@ body {
   margin: 2rem auto;
   max-width: 1100px;
   justify-items: center;
-   cursor: pointer;
-  transition: transform 0.25s ease, box-shadow 0.3s ease;
 }
 
 .movie-card-link {
@@ -290,287 +288,111 @@ body {
   text-shadow: 0 0 10px rgba(255, 80, 150, 0.8);
   margin-top: 3rem;
 }
-/* Movie Detail Page - Horizontal Design */
-.movie-detail-page {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 2rem;
-  background: radial-gradient(circle at top, #0c0714 0%, #05030b 100%);
-  min-height: 100vh;
+
+/* === ANIMATIONS === */
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
 }
 
-
-
-.back-icon-clickable {
-  width: 24px;       
-  height: 24px;
-  cursor: pointer;   
-  filter: brightness(0) invert(1); 
-  transition: transform 0.2s ease;
+@keyframes arrowPulse {
+  0%, 100% { transform: translateY(-50%) scale(1); }
+  50% { transform: translateY(-50%) scale(1.05); }
 }
 
-.back-icon-clickable:hover {
-  transform: scale(1.2); 
+/* === SCROLLBAR STYLING === */
+.toplist-container::-webkit-scrollbar {
+  height: 8px;
 }
 
-
-.back-icon {
-  width: 24px;
-  height: 24px;
-  filter: brightness(0) invert(1); 
-  transition: transform 0.3s ease;
-}
-
-.back-button-icon:hover .back-icon {
-  transform: translateX(-2px);
-}
-
-.movie-detail-horizontal {
-  display: flex;
-  gap: 3rem;
-  align-items: flex-start;
-  margin-top: 2rem;
-}
-
-.movie-poster-section {
-  flex: 0 0 400px;
-}
-
-.movie-detail-poster {
-  width: 100%;
-  height: 600px;
-  border-radius: 16px;
-  box-shadow: 
-    0 0 30px rgba(255, 120, 220, 0.4),
-    0 0 50px rgba(185, 103, 255, 0.3);
-  transition: transform 0.3s ease;
-  object-fit: cover;
-}
-
-.movie-detail-poster:hover {
-  transform: scale(1.02);
-  box-shadow: 
-    0 0 40px rgba(255, 120, 220, 0.6),
-    0 0 60px rgba(185, 103, 255, 0.5);
-}
-
-.movie-detail-poster.placeholder {
-  background: var(--bg-card);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  color: var(--text-muted);
-  font-size: 1.1rem;
-  border: 2px dashed var(--accent-purple);
-}
-
-.movie-info-section {
-  flex: 1;
-  padding: 1rem 0;
-}
-
-.movie-detail-title {
-  font-size: 2.5rem;
-  color: var(--text-light);
-  margin-bottom: 1.5rem;
-  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  text-shadow: 0 0 30px rgba(185, 103, 255, 0.3);
-}
-
-.movie-meta-details {
-  display: flex;
-  gap: 1.5rem;
-  margin-bottom: 1.5rem;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.rating-badge {
-  background: linear-gradient(135deg, #ff9e4f, #ff4fc0);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  font-weight: 600;
-  box-shadow: 0 0 15px rgba(255, 100, 200, 0.5);
-  color: white;
-}
-
-.popularity {
-  background: var(--bg-card);
-  padding: 0.5rem 1rem;
-  border-radius: 20px;
-  border: 1px solid var(--accent-orange);
-  color: var(--accent-orange);
-  font-weight: 600;
-}
-
-.movie-price-section {
-  margin-bottom: 2rem;
-}
-
-.movie-price {
-  font-size: 2rem;
-  font-weight: bold;
-  color: #ff9e4f;
-  text-shadow: 0 0 20px rgba(255, 158, 79, 0.6);
-  animation: priceGlow 2s infinite alternate;
-}
-
-@keyframes priceGlow {
-  from { text-shadow: 0 0 10px rgba(255, 158, 79, 0.4); }
-  to { text-shadow: 0 0 25px rgba(255, 158, 79, 0.8); }
-}
-
-.movie-overview {
-  margin-bottom: 2rem;
-  background: var(--bg-card);
-  padding: 1.5rem;
-  border-radius: 12px;
-  
-}
-
-.movie-overview h3 {
-  color: var(--accent-purple);
-  margin-bottom: 1rem;
-  font-size: 1.3rem;
-}
-
-.movie-overview p {
-  line-height: 1.6;
-  color: var(--text-light);
-  font-size: 1.1rem;
-}
-
-.movie-additional-info {
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-  margin-bottom: 2rem;
-}
-
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1rem;
-  background: var(--bg-card);
+.toplist-container::-webkit-scrollbar-track {
+  background: var(--bg-dark);
   border-radius: 10px;
+}
+
+.toplist-container::-webkit-scrollbar-thumb {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
+  border-radius: 10px;
+}
+
+.toplist-container::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
+}
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 768px) {
+  #root {
+    padding: 1rem;
+  }
   
-}
-
-.info-item strong {
-  color: var(--accent-pink);
-}
-
-.info-item span {
-  color: var(--text-light);
-}
-
-/* Add to Cart Button */
-.movie-actions {
-  margin-top: 2rem;
-  text-align: right;
-}
-.add-to-cart-text {
-  text-align: center;      
-  font-size: 1.3rem;       
-  font-weight: bold;        
-  color: #ff9e4f;           
-  text-shadow: 0 0 10px rgba(255, 158, 79, 0.6);
-  cursor: pointer;         
-  margin: 1rem 0;
-  display: block;          
-}
-
-.add-to-cart-text:hover {
-  transform: scale(1.1);
-  transition: transform 0.2s ease;
-}
-
-
-.add-to-cart-btn.added {
-  background: linear-gradient(135deg, #00ff00, #00cc00);
-  box-shadow: 0 0 25px rgba(0, 255, 0, 0.6);
-}
-
-.success-message {
-  color: #00ff00;
-  font-size: 0.9rem;
-  margin-top: 0.5rem;
-  animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(-10px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-/* Responsive Design */
-@media (max-width: 968px) {
-  .movie-detail-horizontal {
+  .streamify-logo {
+    width: 300px;
+    height: 100px;
+  }
+  
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 12px;
+  }
+  
+  .movie-card {
+    width: 150px;
+    height: 300px;
+  }
+  
+  .poster {
+    height: 220px;
+  }
+  
+  .toplist-arrow {
+    display: none;
+  }
+  
+  .section-header {
     flex-direction: column;
-    gap: 2rem;
-    align-items: center;
+    gap: 1rem;
+    align-items: flex-start;
   }
   
-  .movie-poster-section {
-    flex: 0 0 auto;
+  .genre-dropdown {
     width: 100%;
-    max-width: 400px;
-  }
-  
-  .movie-detail-poster {
-    height: 500px;
-    max-width: 100%;
-  }
-  
-  .movie-detail-title {
-    font-size: 2rem;
-    text-align: center;
-  }
-  
-  .movie-meta-details {
-    justify-content: center;
-  }
-  
-  .movie-actions {
-    text-align: center;
   }
 }
 
 @media (max-width: 480px) {
-  .movie-detail-page {
-    padding: 1rem;
+  .streamify-logo {
+    width: 250px;
+    height: 80px;
   }
   
-  .movie-detail-title {
-    font-size: 1.8rem;
+  .movie-grid {
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+    gap: 10px;
   }
   
-  .add-to-cart-btn {
-    padding: 1rem 2rem;
-    font-size: 1.1rem;
+  .movie-card {
+    width: 130px;
+    height: 280px;
   }
   
-  .movie-meta-details {
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
+  .poster {
+    height: 200px;
   }
   
-  .movie-price {
-    font-size: 1.5rem;
+  .movie-card h3 {
+    font-size: 0.85rem;
   }
   
-  .back-button-icon {
-    width: 45px;
-    height: 45px;
+  .movie-meta {
+    font-size: 0.75rem;
   }
   
-  .back-icon {
-    width: 20px;
-    height: 20px;
+  .section-title {
+    font-size: 1.3rem;
+  }
+  
+  .toplist-header h2 {
+    font-size: 1.3rem;
   }
 }

@@ -5,6 +5,7 @@ import Header from "../components/Header";
 import LoadingState from "../components/LoadingState";
 import ErrorMessage from "../components/ErrorMessage";
 import backIcon from "../assets/backicone.png"; 
+import "../style/MovieDetailPage.css";
 
 export default function MovieDetailPage() {
   const { id } = useParams();
@@ -41,7 +42,26 @@ export default function MovieDetailPage() {
   const handleAddToCart = () => {
     setAddedToCart(true);
     setTimeout(() => setAddedToCart(false), 2000);
-    // add logick to addtocart 
+    // add logic to add to cart 
+  };
+
+  
+  const formatRuntime = (minutes) => {
+    if (!minutes) return 'N/A';
+    const hours = Math.floor(minutes / 60);
+    const mins = minutes % 60;
+    return `${hours}h ${mins}m`;
+  };
+
+  
+  const formatDate = (dateString) => {
+    if (!dateString) return 'Not available';
+    const date = new Date(dateString);
+    return date.toLocaleDateString('en-US', {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric'
+    });
   };
 
   if (loading) return <LoadingState />;
@@ -53,12 +73,11 @@ export default function MovieDetailPage() {
       <Header />
       
       <img 
-  src={backIcon} 
-  alt="Back" 
-  className="back-icon-clickable"
-  onClick={handleBackClick}
-/>
-
+        src={backIcon} 
+        alt="Back" 
+        className="back-icon-clickable"
+        onClick={handleBackClick}
+      />
 
       <div className="movie-detail-horizontal">
         <div className="movie-poster-section">
@@ -86,18 +105,40 @@ export default function MovieDetailPage() {
               Popularity: {movie.popularity?.toFixed(0)}
             </span>
           </div>
-           <div className="info-item">
-             
-              <span>{movie.releaseDate || 'Not available'}</span>
+
+        
+          <div className="genre-date-row">
+            {movie.genres && movie.genres.length > 0 && (
+              <div className="genres-list">
+                {movie.genres.map(genre => (
+                  <span key={genre.id} className="genre-tag">
+                    {genre.name}
+                  </span>
+                ))}
+              </div>
+            )}
+            
+            <div className="release-date-info">
+              <span className="release-date">
+                📅 {formatDate(movie.releaseDate)}
+              </span>
+            </div>
+          </div>
+
+          <div className="movie-additional-info">
+            <div className="info-item">
+              <strong>Runtime:</strong>
+              <span>{formatRuntime(movie.runtime)}</span>
             </div>
             <div className="info-item">
-              
+              <strong>Original Language:</strong>
               <span>{movie.originalLanguage?.toUpperCase() || 'N/A'}</span>
             </div>
             <div className="info-item">
               <strong>Vote Count:</strong>
               <span>{movie.voteCount || 0}</span>
             </div>
+          </div>
 
           <div className="movie-price-section">
             <span className="movie-price">499 $</span>
@@ -110,15 +151,15 @@ export default function MovieDetailPage() {
             </div>
           )}
 
-          <div className="movie-additional-info">
-           
+          <div className="movie-actions">
+            <div 
+              className={`add-to-cart-text ${addedToCart ? 'added' : ''}`}
+              onClick={handleAddToCart}
+            >
+              {addedToCart ? '✓ Added to Cart!' : '🛒 ADD TO CART'}
+            </div>
+            {addedToCart && <div className="success-message">Item added successfully!</div>}
           </div>
-
-         <div className="add-to-cart-text">
-  {addedToCart ? '✓ Added to Cart!' : '🛒 ADD TO CART'}
-</div>
-{addedToCart && <div className="success-message">Item added successfully!</div>}
-
         </div>
       </div>
     </div>

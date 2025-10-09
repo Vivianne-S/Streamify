@@ -1,30 +1,27 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
-const SearchBar = ({ onSearch }) => {
-  const [query, setQuery] = useState('');
 
-  const handleInputChange = (e) => {
-    setQuery(e.target.value);
-  };
+export default function SearchBar {
+  const [term, setTerm] = useState('');
+  const navigate = useNavigate();
 
-  const handleSubmit = (e) => {
+  function onSubmit(e) {
     e.preventDefault();
-    if (onSearch) {
-      onSearch(query);
-    }
-  };
+    const q = term.trim();
+    if (!q) return;
+    navigate(`/search?query=${encodeURIComponent(q)}`);
+  }
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={onSubmit} className="searchbar">
       <input
-        type="text"
-        value={query}
-        onChange={handleInputChange}
-        placeholder="Search..."
-      />
+        value={term}
+        onChange={(e) => setTerm(e.target.value)}
+        placeholder='Search for movies...'
+        aria-label="Search..."
+        />
       <button type="submit">Search</button>
     </form>
   );
-};
-
-export default SearchBar;
+}

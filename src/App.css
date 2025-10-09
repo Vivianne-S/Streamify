@@ -1,6 +1,70 @@
+/* === GLOBAL === */
+:root {
+  --bg-dark: #0a0711;
+  --bg-card: #151020;
+  --accent-pink: #ff4fc0;
+  --accent-purple: #b967ff;
+  --accent-orange: #ff9e4f;
+  --text-light: #f5f6f8;
+  --text-muted: #9a9ab0;
+}
+
+/* === BODY & LAYOUT === */
+body {
+  background: radial-gradient(circle at top, #0c0714 0%, #05030b 100%);
+  color: var(--text-light);
+  font-family: "Poppins", sans-serif;
+  margin: 0;
+  padding: 0;
+}
 
 #root {
   max-width: 1280px;
   margin: 0 auto;
   padding: 2rem;
+}
+
+/* === HEADER / LOGO === */
+.streamify-header {
+  text-align: center;
+  padding: 2.5rem 0 1.5rem;
+}
+
+.streamify-logo {
+  width: 500px;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 16px;
+  filter: drop-shadow(0 0 25px rgba(255, 90, 180, 0.7));
+  animation: glowPulse 3s infinite alternate;
+}
+
+/* === SECTION TITLES === */
+.section-title {
+  font-size: 1.6rem;
+  color: var(--accent-purple);
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 600;
+  text-shadow:
+    0 0 12px rgba(185, 103, 255, 0.8),
+    0 0 30px rgba(255, 120, 220, 0.4),
+    0 0 45px rgba(255, 160, 100, 0.3);
+}
+
+/* === ANIMATIONER === */
+@keyframes glowPulse {
+  from { filter: drop-shadow(0 0 10px var(--accent-pink)); }
+  to { filter: drop-shadow(0 0 25px var(--accent-purple)); }
+}
+
+@keyframes gradientFlow {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 0.6; }
+  50% { opacity: 1; }
 }

@@ -1,56 +1,6 @@
-/* === GLOBAL === */
-:root {
-  --bg-dark: #0a0711;
-  --bg-card: #151020;
-  --accent-pink: #ff4fc0;
-  --accent-purple: #b967ff;
-  --accent-orange: #ff9e4f;
-  --text-light: #f5f6f8;
-  --text-muted: #9a9ab0;
-}
+/* === MOVIES PAGE === */
 
-body {
-  background: radial-gradient(circle at top, #0c0714 0%, #05030b 100%);
-  color: var(--text-light);
-  font-family: "Poppins", sans-serif;
-  margin: 0;
-  padding: 0;
-}
-
-/* === HEADER / LOGO === */
-.streamify-header {
-  text-align: center;
-  padding: 2.5rem 0 1.5rem;
-}
-
-.streamify-logo {
-  width: 500px;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 16px;
-  filter: drop-shadow(0 0 25px rgba(255, 90, 180, 0.7));
-  animation: glowPulse 3s infinite alternate;
-}
-
-@keyframes glowPulse {
-  from { filter: drop-shadow(0 0 10px var(--accent-pink)); }
-  to { filter: drop-shadow(0 0 25px var(--accent-purple)); }
-}
-
-/* === SECTION TITLES === */
-.section-title {
-  font-size: 1.6rem;
-  color: var(--accent-purple);
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-weight: 600;
-  text-shadow:
-    0 0 12px rgba(185, 103, 255, 0.8),
-    0 0 30px rgba(255, 120, 220, 0.4),
-    0 0 45px rgba(255, 160, 100, 0.3);
-}
-
-/* === MOVIE CARDS === */
+/* === GRID === */
 .movie-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
@@ -111,7 +61,7 @@ body {
   font-weight: 500;
 }
 
-/* === MOVIE CARDS RATING + YEAR === */
+/* === META === */
 .movie-meta {
   color: #ffb6ff;
   font-size: 0.85rem;
@@ -138,8 +88,8 @@ body {
 .toplist-section {
   position: relative;
   margin: 2rem auto 3.5rem;
-  max-width: 1150px;          
-  padding-top: 2rem;           
+  max-width: 1150px;
+  padding-top: 2rem;
   z-index: 1;
 }
 
@@ -158,20 +108,15 @@ body {
 
 .toplist-container {
   display: flex;
-  justify-content: flex-start;
-  align-items: flex-start;
   gap: 16px;
-  overflow-x: auto;          
-  overflow-y: visible;
+  overflow-x: auto;
   scroll-behavior: smooth;
   padding: 1rem 1rem 1rem 2rem;
-  position: relative;
-  scrollbar-width: none;    
+  scrollbar-width: none;
 }
 
 .toplist-item {
   flex: 0 0 190px;
-  position: relative;
   transition: transform 0.3s ease;
   z-index: 3;
 }
@@ -181,7 +126,7 @@ body {
   z-index: 5;
 }
 
-/* === TOPLIST ARROWS === */
+/* === ARROWS === */
 .toplist-arrow {
   position: absolute;
   top: 62%;
@@ -208,7 +153,7 @@ body {
 .toplist-arrow.left { left: -5rem; }
 .toplist-arrow.right { right: -5rem; }
 
-/* === ALL MOVIES HEADER + DROPDOWN === */
+/* === FILTER / DROPDOWN === */
 .section-header {
   display: flex;
   align-items: center;
@@ -270,11 +215,6 @@ body {
   animation: pulse 1.5s infinite ease-in-out;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
-}
-
 .error-text {
   color: #ff4fc0;
   text-align: center;
@@ -283,109 +223,77 @@ body {
   margin-top: 3rem;
 }
 
-/* === ANIMATIONS === */
-@keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-@keyframes arrowPulse {
-  0%, 100% { transform: translateY(-50%) scale(1); }
-  50% { transform: translateY(-50%) scale(1.05); }
-}
-
-/* === SCROLLBAR STYLING === */
+/* === SCROLLBAR === */
 .toplist-container::-webkit-scrollbar {
   height: 8px;
 }
-
 .toplist-container::-webkit-scrollbar-track {
   background: var(--bg-dark);
   border-radius: 10px;
 }
-
 .toplist-container::-webkit-scrollbar-thumb {
   background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple));
   border-radius: 10px;
 }
-
 .toplist-container::-webkit-scrollbar-thumb:hover {
   background: linear-gradient(135deg, var(--accent-purple), var(--accent-pink));
 }
 
-/* === RESPONSIVE DESIGN === */
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
-  #root {
-    padding: 1rem;
-  }
-  
-  .streamify-logo {
-    width: 300px;
-    height: 100px;
-  }
-  
   .movie-grid {
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
     gap: 12px;
   }
-  
+
   .movie-card {
     width: 150px;
     height: 300px;
   }
-  
+
   .poster {
     height: 220px;
   }
-  
+
   .toplist-arrow {
     display: none;
   }
-  
+
   .section-header {
     flex-direction: column;
     gap: 1rem;
     align-items: flex-start;
   }
-  
+
   .genre-dropdown {
     width: 100%;
   }
 }
 
 @media (max-width: 480px) {
-  .streamify-logo {
-    width: 250px;
-    height: 80px;
-  }
-  
   .movie-grid {
     grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     gap: 10px;
   }
-  
+
   .movie-card {
     width: 130px;
     height: 280px;
   }
-  
+
   .poster {
     height: 200px;
   }
-  
+
   .movie-card h3 {
     font-size: 0.85rem;
   }
-  
+
   .movie-meta {
     font-size: 0.75rem;
   }
-  
-  .section-title {
-    font-size: 1.3rem;
-  }
-  
+
+  .section-title,
   .toplist-header h2 {
     font-size: 1.3rem;
   }

@@ -3,6 +3,7 @@ import { getPopularMovies } from "../services/TmdbService";
 import TopList from "../components/TopList";
 import Header from "../components/Header";
 import AllMoviesSection from "../components/AllMoviesSection";
+import "../style/MoviePage.css";
 
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);

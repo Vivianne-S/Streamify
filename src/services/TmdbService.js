@@ -70,8 +70,7 @@ export async function searchMovies(query, page = 1, locale = 'en-US') {
   const q = (query ?? "").trim();
   if (!q) return { page:1, total_pages:1, total_results:0, results: []};
 
-  const url = '${BASE}/search/movie?api_key=${KEY}&query=${encudeURIComponent(q)}&language=${locale}&page=${page}&include_adult=false&page=${page}';
-  const res = await fetch(url);
+  const url = `${BASE}/search/movie?api_key=${KEY}&query=${encodeURIComponent(q)}&language=${locale}&include_adult=false&page=${page}`;  const res = await fetch(url);
   if (!res.ok) throw new Error("Failed to fetch search results");
   const data = await res.json();
   return {

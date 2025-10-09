@@ -1,7 +1,7 @@
-import { use, usEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { searchMovies } from "../services/TmdbService";
-// import Header from "../components/Header"; // Header might not be necessary here
+import Header from "../components/Header"; // Header might not be necessary here but I've used it in the return statement for now
 // import "../style/SearchPage.css"; // Optional: Add specific styles for SearchPage
 
 export default function SearchPage() {
@@ -36,22 +36,25 @@ export default function SearchPage() {
   if (!results.length) return <p>No results found for "{q}".</p>;
 
   return (
-    <ul style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "1rem"}}>
-        {results.map((m) => (
-            <li key={m.id} className="movie-card">
-                <Link to={`/movie/${m.id}`} className="movie-card-link">
-                    {m.poster
-                        ? <img src={m.poster} alt={m.title} className="movie-poster" />
-                        : <div className="poster" style={{display:"grid", placeItems:"center"}}>No Poster available</div>
-                    }
-                    <h3>{m.title}</h3>
-                    <p className="movie-meta">
-                        {(m.releaseDate || "").slice(0, 4) || "unknown"} • ⭐{" "}
-                        {typeof m.voteAverage === "number" ? m.voteAverage.toFixed(1) : "-"}
-                    </p>
-                </Link>
-            </li>
-        ))}
-    </ul>
+    <>
+        <Header />
+        <ul style={{display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))", gap: "1rem"}}>
+            {results.map((m) => (
+                <li key={m.id} className="movie-card">
+                    <Link to={`/movie/${m.id}`} className="movie-card-link">
+                        {m.poster
+                            ? <img src={m.poster} alt={m.title} className="movie-poster" />
+                            : <div className="poster" style={{display:"grid", placeItems:"center"}}>No Poster available</div>
+                        }
+                        <h3>{m.title}</h3>
+                        <p className="movie-meta">
+                            {(m.releaseDate || "").slice(0, 4) || "unknown"} • ⭐{" "}
+                            {typeof m.voteAverage === "number" ? m.voteAverage.toFixed(1) : "-"}
+                        </p>
+                    </Link>
+                </li>
+            ))}
+        </ul>
+    </>
   );
 }

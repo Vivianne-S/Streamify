@@ -5,17 +5,15 @@ import MovieDetailPage from "./pages/MovieDetailPage"
 import CartPage from './pages/CartPage';
 
 function App() {
-
   return (
     <>
       <div>
        <Routes>
         <Route path="/" element={<MoviesPage/>} />
-        <Route path="/detail" element={<MovieDetailPage/>} />
-        <Route path="/cart" element={<CartPage/>} />
-      </Routes>
+        <Route path="cart" element={<CartPage/>}/>
+        <Route path="/movie/:id" element={<MovieDetailPage/>} />
+       </Routes>
       </div>
-    
     </>
   )
 }

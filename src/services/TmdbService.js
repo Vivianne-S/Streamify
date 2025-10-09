@@ -5,6 +5,7 @@ const IMG = import.meta.env.VITE_TMDB_IMG;
 
 /** 🔹 Formaterar filmobjekt från TMDb till vårt eget schema */
 function toMovie(dto) {
+  console.log("Processing movie data:", dto);
   return {
     id: dto.id,
     title: dto.title,
@@ -13,18 +14,22 @@ function toMovie(dto) {
     releaseDate: dto.release_date,
     voteAverage: dto.vote_average,
     popularity: dto.popularity,
+    voteCount: dto.vote_count,
+    originalLanguage: dto.original_language,
+    runtime: dto.runtime, // مدة الفيلم بالدقائق
+    genres: dto.genres || [], // أنواع الأفلام
   };
 }
 
-/** 🎬 Hämta populära filmer (10 sidor max) */
+/** 🎬 Hämta populära filmer */
 export async function getPopularMovies(page = 1) {
   const res = await fetch(`${BASE}/movie/popular?api_key=${KEY}&language=en-US&page=${page}`);
-  if (!res.ok) throw new Error("Failed to fetch movies");
+  if (!res.ok) throw new Error("Failed to fetch popular movies");
   const data = await res.json();
   return data.results.map(toMovie);
 }
 
-/** 🏷️ Hämta lista över genrer (på engelska) */
+/** 🏷️ Hämta lista över genrer */
 export async function getGenres() {
   const res = await fetch(`${BASE}/genre/movie/list?api_key=${KEY}&language=en-US`);
   if (!res.ok) throw new Error("Failed to fetch genres");
@@ -34,10 +39,22 @@ export async function getGenres() {
 
 /** 🔸 Hämta filmer baserat på genre */
 export async function getMoviesByGenre(genreId, page = 1) {
-  const res = await fetch(
-    `${BASE}/discover/movie?api_key=${KEY}&language=en-US&with_genres=${genreId}&page=${page}`
-  );
+  const res = await fetch(`${BASE}/discover/movie?api_key=${KEY}&language=en-US&with_genres=${genreId}&page=${page}`);
   if (!res.ok) throw new Error("Failed to fetch movies by genre");
   const data = await res.json();
   return data.results.map(toMovie);
+}
+
+/** 🎭 Hämta detaljer för en specifik film */
+export async function getMovieDetails(movieId) {
+  console.log("Fetching details for movie ID:", movieId);
+  const url = `${BASE}/movie/${movieId}?api_key=${KEY}&language=en-US`;
+  console.log("Fetching from URL:", url);
+
+  const res = await fetch(url);
+  if (!res.ok) {
+    throw new Error(`Failed to fetch movie details: ${res.status} ${res.statusText}`);
+  }
+  const data = await res.json();
+  return toMovie(data);
 }

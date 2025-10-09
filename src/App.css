@@ -31,6 +31,7 @@ html, body {
 .streamify-header {
   text-align: center;
   padding: 2.5rem 0 1.5rem;
+  position: relative;
 }
 
 .streamify-logo {
@@ -40,6 +41,36 @@ html, body {
   border-radius: 16px;
   filter: drop-shadow(0 0 25px rgba(255, 90, 180, 0.7));
   animation: glowPulse 3s infinite alternate;
+}
+
+/* === CART ICON === */
+.cart-icon-container {
+  position: fixed;
+  top: 2rem;
+  right: 2rem;
+  z-index: 1000;
+  cursor: pointer;
+  background: linear-gradient(135deg, #ff9e4f, #ff4fc0, #b967ff);
+  background-size: 200% 200%;
+  animation: gradientFlow 4s ease infinite;
+  border-radius: 50%;
+  width: 60px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 0 25px rgba(255, 100, 200, 0.8);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.cart-icon-container:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 40px rgba(255, 150, 255, 1);
+}
+
+.cart-icon {
+  font-size: 1.8rem;
+  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
 }
 
 /* === SECTION TITLES === */
@@ -109,5 +140,16 @@ html, body {
   .section-title {
     font-size: 1.3rem;
     text-align: center;
+  }
+
+  .cart-icon-container {
+    width: 50px;
+    height: 50px;
+    top: 1rem;
+    right: 1rem;
+  }
+
+  .cart-icon {
+    font-size: 1.5rem;
   }
 }

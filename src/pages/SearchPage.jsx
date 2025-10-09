@@ -1,8 +1,8 @@
 import { use, usEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { searchMovies } from "../services/TmdbService";
-import Header from "../components/Header";
-// import "../style/SearchPage.css";
+// import Header from "../components/Header"; // Header might not be necessary here
+// import "../style/SearchPage.css"; // Optional: Add specific styles for SearchPage
 
 export default function SearchPage() {
   const [params] = useSearchParams();
@@ -20,7 +20,7 @@ export default function SearchPage() {
             const data = await searchMovies(term);
             if (!cancelled) setState({ loading: false, error: "", data });
         } catch (err) {
-            if (!cancelled) setState({ loading: false, error: err?.message || "Error." data: null });
+            if (!cancelled) setState({ loading: false, error: err?.message || "Error fetching data.", data: null });
         }
     }
     run();

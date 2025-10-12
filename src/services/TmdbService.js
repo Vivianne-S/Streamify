@@ -16,8 +16,8 @@ function toMovie(dto) {
     popularity: dto.popularity,
     voteCount: dto.vote_count,
     originalLanguage: dto.original_language,
-    runtime: dto.runtime, // مدة الفيلم بالدقائق
-    genres: dto.genres || [], // أنواع الأفلام
+    runtime: dto.runtime, 
+    genres: dto.genres || [], 
   };
 }
 

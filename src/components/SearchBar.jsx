@@ -3,21 +3,22 @@ import { useNavigate } from 'react-router-dom';
 
 
 export default function SearchBar() {
-  const [term, setTerm] = useState("");
+  const [query, setQuery] = useState("");
   const navigate = useNavigate();
 
   function onSubmit(e) {
     e.preventDefault();
-    const q = term.trim();
-    if (!q) return;
+    const q = query.trim();
+    if (!q) return;         // prevent empty searches
     navigate(`/search?query=${encodeURIComponent(q)}`);
   }
 
   return (
     <form onSubmit={onSubmit} className="searchbar">
       <input
-        value={term}
-        onChange={(e) => setTerm(e.target.value)}
+        type="search"
+        value={query}
+        onChange={(e) => setQuery(e.target.value)}
         placeholder='Search for movies...'
         aria-label="Search..."
         />

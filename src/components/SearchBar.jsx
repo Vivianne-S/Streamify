@@ -10,7 +10,7 @@ export default function SearchBar() {
     e.preventDefault();
     const q = query.trim();
     if (!q) return;         // prevent empty searches
-    navigate(`/search?query=${encodeURIComponent(q)}`);
+    navigate(`/search?q=${encodeURIComponent(q)}`);
   }
 
   return (

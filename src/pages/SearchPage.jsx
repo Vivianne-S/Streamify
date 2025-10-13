@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { searchMovies } from "../services/TmdbService";
+import Header from "../components/Header";
 // import "../style/SearchPage.css"; // Optional: Add specific styles for SearchPage
 
 export default function SearchPage() {

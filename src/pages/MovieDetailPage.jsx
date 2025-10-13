@@ -6,6 +6,7 @@ import LoadingState from "../components/LoadingState";
 import ErrorMessage from "../components/ErrorMessage";
 import backIcon from "../assets/backicone.png"; 
 import "../style/MovieDetailPage.css";
+import { useCart } from "../context/CartContext";
 
 export default function MovieDetailPage() {
   const { id } = useParams();
@@ -14,6 +15,7 @@ export default function MovieDetailPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [addedToCart, setAddedToCart] = useState(false);
+  const {addToCart} = useCart();
 
   useEffect(() => {
     console.log("Movie ID from URL:", id);
@@ -40,9 +42,17 @@ export default function MovieDetailPage() {
   };
 
   const handleAddToCart = () => {
+    if(!movie) return;
+    addToCart({
+      id : movie.id,
+      title :movie.title,
+      image: movie.poster,
+      price : movie.price
+
+    })
     setAddedToCart(true);
-    setTimeout(() => setAddedToCart(false), 2000);
-    // add logic to add to cart 
+    setTimeout(()=> setAddedToCart(false),2000);
+
   };
 
   
@@ -140,8 +150,9 @@ export default function MovieDetailPage() {
             </div>
           </div>
 
-          <div className="movie-price-section">
-            <span className="movie-price">499 $</span>
+        <div className="info-item">
+           <strong>Price :   </strong>
+            <span className="movie-price">    499 $</span>
           </div>
 
           {movie.overview && (

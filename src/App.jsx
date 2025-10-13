@@ -4,6 +4,7 @@ import MoviesPage from "./pages/MoviesPage"
 import MovieDetailPage from "./pages/MovieDetailPage"
 import CartPage from './pages/CartPage';
 import SearchPage from "./pages/SearchPage"
+import ConfirmationPage from './pages/ConfirmationPage';
 
 function App() {
   return (
@@ -12,8 +13,9 @@ function App() {
        <Routes>
         <Route path="/" element={<MoviesPage/>} />
         <Route path="cart" element={<CartPage/>}/>
-        <Route path="/movie/:id" element={<MovieDetailPage/>}/>
         <Route path="/search" element={<SearchPage/>}/>
+        <Route path="/movie/:id" element={<MovieDetailPage/>} />
+        <Route path="/confirmation" element={<ConfirmationPage/>} />
        </Routes>
       </div>
     </>

@@ -1,6 +1,13 @@
+import { useNavigate } from "react-router-dom";
 import PaymentCard from "./PaymentCard";
 
 export default function CheckoutForm() {
+  const navigate = useNavigate();
+
+  const handleCheckout = () => {
+    navigate("/confirmation");
+  };
+
   return (
     <section className="checkout-form">
       <div className="checkout-inner">
@@ -23,7 +30,7 @@ export default function CheckoutForm() {
               <span>TOTAL:</span>
               <span>14.97 $</span>
             </p>
-            <button className="checkout-btn">CHECKOUT</button>
+            <button className="checkout-btn" onClick={handleCheckout}>CHECKOUT</button>
           </div>
         </div>
       </div>

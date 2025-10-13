@@ -60,3 +60,50 @@ export async function getMovieDetails(movieId) {
   const data = await res.json();
   return toMovie(data);
 }
+
+// SEARCH FUNCTIONALITY PART
+/** 🔍 Search movies function */
+export async function searchMovies(query, { page = 1, locale = "en-US" } = {}) {
+  const KEY = import.meta.env.VITE_TMDB_API_KEY;
+  if (!KEY) throw new Error("API key is missing");
+  const q = (query ?? "").trim();
+  if (!q) {
+    return { page:1, total_pages:1, total_results:0, results: []};
+  }
+
+  // sets the url for the search request
+  const BASE = (import.meta.env.VITE_TMDB_BASE || "https://api.themoviedb.org/3").replace(/\/+$/, "");
+  const url = new URL(`${BASE}/search/movie`);
+  url.searchParams.set("api_key", KEY);
+  url.searchParams.set("query", q);
+  url.searchParams.set("language", locale);
+  url.searchParams.set("include_adult", "false");
+  url.searchParams.set("page", String(page));
+
+  // sends request to TMDB + some error handling
+  const res = await fetch(url.toString());
+  if (!res.ok) throw new Error(`TMDB search failed: ${res.status} ${res.statusText}`);
+
+  /* Alternative error handling with try-catch if we get network errors
+  let res;
+  try {
+  res = await fetch(url.toString());
+  } catch (err) {
+  throw new Error(`Network error contacting TMDB: ${err.message}`);
+  }
+  if (!res.ok) {
+  throw new Error(`TMDB search failed: ${res.status} ${res.statusText}`);
+  }
+  */
+
+  // processes the response data and maps it to our movie format
+  const data = await res.json();
+  const list = Array.isArray(data?.results) ? data.results : [];
+  return {
+    page: data.page,
+    total_pages: data.total_pages,
+    total_results: data.total_results,
+    results: list.map(toMovie),
+  };
+}
+// SEARCH FUNCTIONALITY PART END

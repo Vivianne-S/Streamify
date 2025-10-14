@@ -1,7 +1,10 @@
 import { useCart } from "../context/CartContext";
 export default function CartList() {
    const { cartItems } = useCart();
-  
+   //Beräkning av filmpris
+   const totalPrice = cartItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
+
+
 
   return (
      <aside className="cart-list">
@@ -29,7 +32,7 @@ export default function CartList() {
 
       <div className="cart-total">
         <span>TOTAL:</span>
-        <span>14.97 $</span>
+        <span>{totalPrice} $</span>
       </div>
     </aside>
   );

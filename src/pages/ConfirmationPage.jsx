@@ -23,7 +23,10 @@ export default function ConfirmationPage() {
           ←
         </button>
 
-  
+        <h1 className="confirmation-title">✓ Order Confirmed!</h1>
+        <p className="confirmation-subtitle">
+          Thank you for your purchase. Your order has been successfully processed.
+        </p>
 
         <div className="confirmation-content">
           <div className="confirmation-left">

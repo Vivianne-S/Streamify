@@ -1,9 +1,24 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-  const [cartItems, setCartItems] = useState([]);
+
+ const [cartItems, setCartItems] = useState(() => {
+  try {
+    const saved = localStorage.getItem("cart");
+    return saved ? JSON.parse(saved) : [];
+  } catch (error) {
+    console.error("❌ Error parsing cart from localStorage:", error);
+    localStorage.removeItem("cart"); 
+    return [];
+  }
+});
+
+
+  useEffect(() => {
+    localStorage.setItem("cart" , JSON.stringify(cartItems));
+  } , [cartItems]);
 
   const addToCart = (movie) => {
     setCartItems((prev) => {

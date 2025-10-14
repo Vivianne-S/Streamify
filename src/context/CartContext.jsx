@@ -3,7 +3,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 const CartContext = createContext();
 
 export function CartProvider({ children }) {
-
+  const [customerInfo, setCustomerInfo] = useState(null);
  const [cartItems, setCartItems] = useState(() => {
   try {
     const saved = localStorage.getItem("cart");
@@ -28,8 +28,17 @@ export function CartProvider({ children }) {
     });
   };
 
+  const saveCustomerInfo = (info) => {
+    setCustomerInfo(info);
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    setCustomerInfo(null);
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, customerInfo, saveCustomerInfo, clearCart }}>
       {children}
     </CartContext.Provider>
   );

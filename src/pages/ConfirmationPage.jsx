@@ -1,32 +1,15 @@
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext";
 import Header from "../components/Header";
 import "../style/ConfirmationPage.css";
 
 export default function ConfirmationPage() {
   const navigate = useNavigate();
+  const { cartItems, customerInfo } = useCart();
 
-  const movies = [
-    {
-      title: "Filmen om Bob",
-      price: "4.99",
-    },
-    {
-      title: "The Conjuring 15",
-      price: "4.99",
-    },
-    {
-      title: "Hoppditihoop",
-      price: "4.99",
-    },
-  ];
+  const FAKE_PRICE = "4.99";
 
-  const customerInfo = {
-    name: "Namn",
-    address: "Adress",
-    cardNumber: "############7234",
-  };
-
-  const total = "14.97";
+  const total = (cartItems.length * parseFloat(FAKE_PRICE)).toFixed(2);
 
   const handleBackClick = () => {
     navigate("/cart");
@@ -45,10 +28,10 @@ export default function ConfirmationPage() {
         <div className="confirmation-content">
           <div className="confirmation-left">
             <div className="confirmation-movies">
-              {movies.map((movie, index) => (
-                <div className="confirmation-movie-item" key={index}>
+              {cartItems.map((movie) => (
+                <div className="confirmation-movie-item" key={movie.id}>
                   <span className="confirmation-movie-title">{movie.title}</span>
-                  <span className="confirmation-movie-price">{movie.price} $</span>
+                  <span className="confirmation-movie-price">{FAKE_PRICE} $</span>
                 </div>
               ))}
             </div>
@@ -60,15 +43,17 @@ export default function ConfirmationPage() {
             <div className="confirmation-info">
               <div className="confirmation-info-item">
                 <span className="confirmation-label">Namn:</span>
-                <span className="confirmation-value">{customerInfo.name}</span>
+                <span className="confirmation-value">{customerInfo?.name || "N/A"}</span>
               </div>
               <div className="confirmation-info-item">
                 <span className="confirmation-label">Faktura adress:</span>
-                <span className="confirmation-value">{customerInfo.address}</span>
+                <span className="confirmation-value">{customerInfo?.address || "N/A"}</span>
               </div>
               <div className="confirmation-info-item">
                 <span className="confirmation-label"></span>
-                <span className="confirmation-value">{customerInfo.cardNumber}</span>
+                <span className="confirmation-value">
+                  {customerInfo?.cardNumber ? `############${customerInfo.cardNumber}` : "N/A"}
+                </span>
               </div>
             </div>
 

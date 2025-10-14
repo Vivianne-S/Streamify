@@ -4,6 +4,7 @@ const CartContext = createContext();
 
 export function CartProvider({ children }) {
   const [cartItems, setCartItems] = useState([]);
+  const [customerInfo, setCustomerInfo] = useState(null);
 
   const addToCart = (movie) => {
     setCartItems((prev) => {
@@ -13,8 +14,17 @@ export function CartProvider({ children }) {
     });
   };
 
+  const saveCustomerInfo = (info) => {
+    setCustomerInfo(info);
+  };
+
+  const clearCart = () => {
+    setCartItems([]);
+    setCustomerInfo(null);
+  };
+
   return (
-    <CartContext.Provider value={{ cartItems, addToCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, customerInfo, saveCustomerInfo, clearCart }}>
       {children}
     </CartContext.Provider>
   );

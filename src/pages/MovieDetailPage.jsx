@@ -152,7 +152,7 @@ export default function MovieDetailPage() {
 
         <div className="info-item">
            <strong>Price :   </strong>
-            <span className="movie-price">    499 $</span>
+            <span className="movie-price"> {movie.price} $</span>
           </div>
 
           {movie.overview && (

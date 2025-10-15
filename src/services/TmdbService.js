@@ -3,6 +3,29 @@ const BASE = import.meta.env.VITE_TMDB_BASE;
 const KEY = import.meta.env.VITE_TMDB_API_KEY;
 const IMG = import.meta.env.VITE_TMDB_IMG;
 
+/** 🔹 Generera ett slumpmässigt pris baserat på filmens popularitet */
+function generateMoviePrice(movieData) {
+  const basePrice = 199; 
+  
+ //Öka priset baserat på betyg (0-10 blir 0-200)
+  const ratingBonus = (movieData.vote_average || 5) * 20;
+  
+// Öka priset baserat på popularitet (dividera med 10 för att undvika mycket höga priser)
+  const popularityBonus = (movieData.popularity || 0) / 10;
+  
+  // Prisökning om filmen är ny (filmer efter 2020)
+  const releaseYear = new Date(movieData.release_date).getFullYear();
+  const yearBonus = releaseYear >= 2020 ? 50 : 0;
+  
+ //Öka priset om filmen är en storfilm
+  const isBlockbuster = movieData.vote_count > 1000 ? 30 : 0;
+  
+  const totalPrice = basePrice + ratingBonus + popularityBonus + yearBonus + isBlockbuster;
+  
+  // Avrunda till närmaste 9,99 (psykologisk prissättning)
+  return Math.floor(totalPrice / 10) * 10 - 0.01;
+}
+
 /** 🔹 Formaterar filmobjekt från TMDb till vårt eget schema */
 function toMovie(dto) {
   console.log("Processing movie data:", dto);
@@ -18,6 +41,7 @@ function toMovie(dto) {
     originalLanguage: dto.original_language,
     runtime: dto.runtime, 
     genres: dto.genres || [], 
+    price: generateMoviePrice(dto)
     
 
   };

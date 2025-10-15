@@ -3,9 +3,6 @@ export default function CartList() {
    const { cartItems } = useCart();
    //Beräkning av filmpris
    const totalPrice = cartItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
-
-
-
   return (
      <aside className="cart-list">
       <div className="cart-list-header">

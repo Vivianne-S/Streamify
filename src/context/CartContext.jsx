@@ -32,13 +32,20 @@ export function CartProvider({ children }) {
     setCustomerInfo(info);
   };
 
+   const removeFromCart = (id) => {
+    setCartItems((prev) => prev.filter((item) => item.id !== id));
+  };
+
   const clearCart = () => {
     setCartItems([]);
     setCustomerInfo(null);
   };
+   
+  const totalPrice = cartItems.reduce(
+    (sum, item) => sum + item.price, 0);
 
   return (
-    <CartContext.Provider value={{ cartItems, addToCart, customerInfo, saveCustomerInfo, clearCart }}>
+    <CartContext.Provider value={{ cartItems, addToCart, customerInfo, saveCustomerInfo, clearCart,removeFromCart }}>
       {children}
     </CartContext.Provider>
   );

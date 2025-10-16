@@ -7,9 +7,7 @@ export default function ConfirmationPage() {
   const navigate = useNavigate();
   const { cartItems, customerInfo } = useCart();
 
-  const FAKE_PRICE = "4.99";
-
-  const total = (cartItems.length * parseFloat(FAKE_PRICE)).toFixed(2);
+  const total = cartItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0).toFixed(2);
 
   const handleBackClick = () => {
     navigate("/cart");
@@ -34,7 +32,7 @@ export default function ConfirmationPage() {
               {cartItems.map((movie) => (
                 <div className="confirmation-movie-item" key={movie.id}>
                   <span className="confirmation-movie-title">{movie.title}</span>
-                  <span className="confirmation-movie-price">{FAKE_PRICE} $</span>
+                  <span className="confirmation-movie-price">{movie.price} $</span>
                 </div>
               ))}
             </div>

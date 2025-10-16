@@ -1,8 +1,8 @@
 import { useCart } from "../context/CartContext";
 export default function CartList() {
-   const { cartItems } = useCart();
-  
-
+   const { cartItems,removeFromCart } = useCart();
+   //Beräkning av filmpris
+   const totalPrice = cartItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
   return (
      <aside className="cart-list">
       <div className="cart-list-header">
@@ -21,7 +21,11 @@ export default function CartList() {
                 <p className="movie-title">{movie.title}</p>
                 <p className="movie-price">{movie.price} $</p>
               </div>
-            
+            <button className="remove-btn"
+              onClick={() => removeFromCart(movie.id)}
+              >
+                ✕
+              </button>
             </div>
           ))
         )}
@@ -29,7 +33,7 @@ export default function CartList() {
 
       <div className="cart-total">
         <span>TOTAL:</span>
-        <span>14.97 $</span>
+        <span>{totalPrice} $</span>
       </div>
     </aside>
   );

@@ -5,6 +5,21 @@
   font-family: Inter, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
+/* Back Icon */
+.back-icon-clickable {
+  width: 24px;
+  height: 24px;
+  cursor: pointer;
+  filter: brightness(0) invert(1);
+  transition: transform 0.2s ease;
+  margin-left: 32px;
+  margin-top: 20px;
+}
+
+.back-icon-clickable:hover {
+  transform: scale(1.2);
+}
+
 .cart-layout {
   display: flex;
   gap: 32px;

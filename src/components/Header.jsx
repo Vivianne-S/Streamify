@@ -1,8 +1,10 @@
 import { useNavigate } from "react-router-dom";
+import { useCart } from "../context/CartContext"; 
 import logo from "../assets/streamify-logo.png";
 
 export default function Header() {
   const navigate = useNavigate();
+  const { cartItems } = useCart(); // gets amount of movies added to cart 
 
   const handleCartClick = () => {
     navigate("/cart");
@@ -11,8 +13,14 @@ export default function Header() {
   return (
     <header className="streamify-header">
       <img src={logo} alt="Streamify logo" className="streamify-logo" />
+
       <div className="cart-icon-container" onClick={handleCartClick}>
         <span className="cart-icon">🛒</span>
+
+        {/* Badge that shows amount of movies on cart */}
+        {cartItems.length > 0 && (
+          <span className="cart-count">{cartItems.length}</span>
+        )}
       </div>
     </header>
   );

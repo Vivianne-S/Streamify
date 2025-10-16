@@ -1,0 +1,29 @@
+.scroll-to-top {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background: linear-gradient(45deg, var(--accent-pink), var(--accent-purple));
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 0.9rem;
+    cursor: pointer;
+    box-shadow: 0 0 20px rgba(255, 79, 192, 0.6);
+    transition: all 0.3s ease;
+    z-index: 1000;
+    opacity: 0;
+    animation: fadeIn 0.3s forwards;
+  }
+  
+  @keyframes fadeIn {
+    to { opacity: 1; }
+  }
+  
+  @keyframes neonPulse {
+    0%, 100% {
+      box-shadow: 0 0 20px #ff4fc0, 0 0 40px #b967ff;
+    }
+    50% {
+      box-shadow: 0 0 35px #ff4fc0, 0 0 60px #b967ff;
+    }
+  }

@@ -3,8 +3,9 @@ import { getPopularMovies } from "../services/TmdbService";
 import TopList from "../components/TopList";
 import Header from "../components/Header";
 import AllMoviesSection from "../components/AllMoviesSection";
-import "../style/MoviePage.css";
 import SearchBar from "../components/SearchBar";
+import ScrollToTopButton from "../components/ScrollToTopButton"; // ⬅️ ny import
+import "../style/MoviePage.css";
 
 export default function MoviesPage() {
   const [movies, setMovies] = useState([]);
@@ -23,10 +24,12 @@ export default function MoviesPage() {
   if (error) return <p style={{ color: "red" }}>{error}</p>;
 
   // 🎬 Sortera topplistan baserat på högst betyg
-  const topRated = [...movies].sort((a, b) => b.voteAverage - a.voteAverage).slice(0, 10);
+  const topRated = [...movies]
+    .sort((a, b) => b.voteAverage - a.voteAverage)
+    .slice(0, 10);
 
-  // Filter movies based on search query
-  const filteredMovies = movies.filter(movie =>
+  // 🔍 Filtrera filmer baserat på sökning
+  const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(searchQuery.toLowerCase())
   );
 
@@ -36,6 +39,7 @@ export default function MoviesPage() {
       <SearchBar onSearch={setSearchQuery} /> {/* Search bar component */}
       <TopList movies={topRated} />
       <AllMoviesSection movies={filteredMovies} /> {/* Filtered movies */}
+      <ScrollToTopButton /> {/* ⬅️ Pilkomponent längst ner */}
     </section>
   );
 }

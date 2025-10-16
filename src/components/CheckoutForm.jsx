@@ -96,10 +96,6 @@ export default function CheckoutForm() {
         <div className="checkout-details">
           <PaymentCard paymentData={paymentData} setPaymentData={setPaymentData} />
           <div className="checkout-summary">
-            <p>
-              <span>TOTAL:</span>
-              <span>14.97 $</span>
-            </p>
             <button className="checkout-btn" onClick={handleCheckout}>CHECKOUT</button>
           </div>
         </div>

@@ -1,155 +1,171 @@
-/* === GLOBAL VARIABLES === */
-:root {
-  --bg-dark: #0a0711;
-  --bg-card: #151020;
-  --accent-pink: #ff4fc0;
-  --accent-purple: #b967ff;
-  --accent-orange: #ff9e4f;
-  --text-light: #f5f6f8;
-  --text-muted: #9a9ab0;
-}
-
-/* === BASE STYLES === */
-html, body {
-  margin: 0;
-  padding: 0;
-  font-family: "Poppins", sans-serif;
-  background: radial-gradient(circle at top, #0c0714 0%, #05030b 100%);
-  color: var(--text-light);
-  overflow-x: hidden;
-}
-
-/* === ROOT LAYOUT === */
-#root {
-  max-width: 1280px;
+/* === SEARCH PAGE CONTAINER === */
+.search-page {
+  max-width: 1200px;
   margin: 0 auto;
   padding: 2rem;
-  transition: padding 0.3s ease;
+  min-height: 100vh;
+  background: var(--bg-dark);
 }
 
-/* === HEADER === */
-.streamify-header {
-  text-align: center;
-  padding: 2.5rem 0 1.5rem;
-  position: relative;
-}
-
-.streamify-logo {
-  width: 500px;
-  height: 160px;
-  object-fit: cover;
-  border-radius: 16px;
-  filter: drop-shadow(0 0 25px rgba(255, 90, 180, 0.7));
-  animation: glowPulse 3s infinite alternate;
-}
-
-/* === CART ICON === */
-.cart-icon-container {
-  position: fixed;
-  top: 2rem;
-  right: 2rem;
-  z-index: 1000;
-  cursor: pointer;
-  background: linear-gradient(135deg, #ff9e4f, #ff4fc0, #b967ff);
-  background-size: 200% 200%;
-  animation: gradientFlow 4s ease infinite;
-  border-radius: 50%;
-  width: 60px;
-  height: 60px;
+/* === SEARCH BAR === */
+.searchbar {
   display: flex;
   align-items: center;
-  justify-content: center;
-  box-shadow: 0 0 25px rgba(255, 100, 200, 0.8);
-  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  gap: 0.6rem;
+  margin: 2rem auto 2.5rem auto;
+  max-width: 400px;
+  background: var(--bg-card);
+  border-radius: 14px;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.15);
+  padding: 0.5rem 1rem;
 }
-
-.cart-icon-container:hover {
-  transform: scale(1.1);
-  box-shadow: 0 0 40px rgba(255, 150, 255, 1);
+.searchbar input {
+  flex: 1;
+  border: 1px solid var(--accent-pink);
+  outline: none;
+  background: transparent;
+  color: var(--text-light);
+  font-size: 1rem;
+  padding: 0.5rem;
+  border-radius: 8px;
 }
-
-.cart-icon {
-  font-size: 1.8rem;
-  filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.3));
+.searchbar input[type="search"]::placeholder {
+  color: var(--text-muted);
+  opacity: 0.7;
 }
-
-/* === SECTION TITLES === */
-.section-title {
-  font-size: 1.6rem;
-  color: var(--accent-purple);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+.searchbar button[type="submit"] {
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink), var(--accent-purple));
+  color: var(--text-light);
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.3rem;
+  font-size: 1rem;
   font-weight: 600;
-  text-shadow:
-    0 0 12px rgba(185, 103, 255, 0.8),
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(255, 100, 200, 0.6);
+  transition: all 0.25s ease;
+}
+.searchbar button[type="submit"]:hover {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple), var(--accent-orange));
+  box-shadow: 0 0 40px rgba(255, 150, 255, 1);
+  transform: scale(1.07);
+}
+
+/* === RESULTS GRID === */
+.search-results-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 18px;
+  margin: 2rem auto;
+  justify-items: center;
+}
+
+.search-result-card {
+  width: 100%;
+  max-width: 200px;
+  background: var(--bg-card);
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 0 18px rgba(0, 0, 0, 0.45);
+  transition: transform 0.25s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.search-result-card:hover {
+  transform: translateY(-6px);
+  box-shadow:
     0 0 30px rgba(255, 120, 220, 0.4),
-    0 0 45px rgba(255, 160, 100, 0.3);
+    0 0 45px rgba(185, 103, 255, 0.3),
+    0 0 25px rgba(255, 160, 100, 0.25);
 }
 
-/* === GLOBAL ANIMATIONS === */
-@keyframes glowPulse {
-  from { filter: drop-shadow(0 0 10px var(--accent-pink)); }
-  to { filter: drop-shadow(0 0 25px var(--accent-purple)); }
+.search-result-poster {
+  width: 100%;
+  aspect-ratio: 2 / 3;
+  object-fit: cover;
+  border-radius: 14px 14px 0 0;
+  border-bottom: 1px solid #2a2233;
+  transition: transform 0.3s ease, opacity 0.3s ease;
 }
 
-@keyframes gradientFlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
+.search-result-card:hover .search-result-poster {
+  transform: scale(0.95);
+  opacity: 0.9;
 }
 
-@keyframes pulse {
-  0%, 100% { opacity: 0.6; }
-  50% { opacity: 1; }
+.search-result-title {
+  margin: 0.6rem 0 0.3rem;
+  padding: 0 0.4rem;
+  font-size: 1rem;
+  text-align: center;
+  color: var(--text-light);
+  font-weight: 500;
 }
 
-/* === RESPONSIVE BASE === */
-@media (max-width: 1024px) {
-  #root {
-    padding: 1.5rem;
-    max-width: 100%;
-  }
+.search-result-meta {
+  color: #ffb6ff;
+  font-size: 0.85rem;
+  text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.3rem;
+  text-shadow:
+    0 0 8px rgba(255, 120, 220, 0.6),
+    0 0 12px rgba(185, 103, 255, 0.4);
+  transition: color 0.3s ease;
+}
 
-  .streamify-logo {
-    width: 70%;
-    height: auto;
+.search-result-card:hover .search-result-meta {
+  color: #ffe0ff;
+}
+
+.back-btn {
+  background: linear-gradient(135deg, var(--accent-orange), var(--accent-pink), var(--accent-purple));
+  color: var(--text-light);
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.3rem;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  box-shadow: 0 0 25px rgba(255, 100, 200, 0.6);
+  transition: background 0.3s, box-shadow 0.3s, transform 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.back-btn:hover {
+  background: linear-gradient(135deg, var(--accent-pink), var(--accent-purple), var(--accent-orange));
+  box-shadow: 0 0 40px rgba(255, 150, 255, 1);
+  transform: scale(1.07);
+}
+
+/* === RESPONSIVE === */
+@media (max-width: 768px) {
+  .search-page {
+    padding: 1rem;
+  }
+  .search-results-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+  .search-result-card {
+    max-width: 160px;
   }
 }
 
-@media (max-width: 600px) {
-  #root {
-    padding: 0.8rem;
+@media (max-width: 480px) {
+  .search-result-card {
+    max-width: 140px;
   }
-
-  .streamify-header {
-    padding: 0.8rem 0 0.3rem;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
+  .search-result-title {
+    font-size: 0.9rem;
   }
-
-  .streamify-logo {
-    width: 75%;
-    max-width: 300px;
-    height: auto;
-    display: block;
-    margin: 0 auto;
-  }
-
-  .section-title {
-    font-size: 1.3rem;
-    text-align: center;
-  }
-
-  .cart-icon-container {
-    width: 50px;
-    height: 50px;
-    top: 1rem;
-    right: 1rem;
-  }
-
-  .cart-icon {
-    font-size: 1.5rem;
+  .search-result-meta {
+    font-size: 0.75rem;
   }
 }

@@ -3,7 +3,7 @@ import { useNavigate, useSearchParams, Link } from "react-router-dom";
 import { searchMovies } from "../services/TmdbService";
 import Header from "../components/Header";
 import backIcon from "../assets/backicone.png";
-// import "../style/SearchPage.css"; // Optional: Add specific styles for SearchPage
+import "../style/SearchPage.css";
 
 export default function SearchPage() {
   const [params] = useSearchParams();
@@ -44,14 +44,12 @@ export default function SearchPage() {
   if (!q.trim()) return <p>Please enter a search term.</p>;
   if (state.loading) return <p>Searching for "{q}"...</p>;
   if (state.error) return <p style={{ color: "red" }}>Error: {state.error}</p>;
-  if (!state.data || state.data.results.length === 0)
-    return <p>No results found for "{q}".</p>;
-
+  
   const results = state.data?.results ?? [];
   if (!results.length) return <p>No results found for "{q}".</p>;
 
-  return (
-    <>
+   return (
+    <section className="search-page">
       <Header />
       <div className="page-toolbar">
         <button
@@ -61,31 +59,25 @@ export default function SearchPage() {
           aria-label="Go back"
           title="Back"
         >
-          <img src={backIcon} />
+          <img src={backIcon} alt="Back" width={28} height={28} />
         </button>
       </div>
-      <ul
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fill, minmax(160px, 1fr))",
-          gap: "1rem",
-        }}
-      >
+      <ul className="search-results-grid">
         {results.map((m) => (
-          <li key={m.id} className="movie-card">
+          <li key={m.id} className="search-result-card">
             <Link to={`/movie/${m.id}`} className="movie-card-link">
               {m.poster ? (
-                <img src={m.poster} alt={m.title} className="movie-poster" />
+                <img src={m.poster} alt={m.title} className="search-result-poster" />
               ) : (
                 <div
-                  className="poster"
+                  className="search-result-poster"
                   style={{ display: "grid", placeItems: "center" }}
                 >
                   No Poster available
                 </div>
               )}
-              <h3>{m.title}</h3>
-              <p className="movie-meta">
+              <h3 className="search-result-title">{m.title}</h3>
+              <p className="search-result-meta">
                 {(m.releaseDate || "").slice(0, 4) || "unknown"} • ⭐{" "}
                 {typeof m.voteAverage === "number"
                   ? m.voteAverage.toFixed(1)
@@ -95,6 +87,6 @@ export default function SearchPage() {
           </li>
         ))}
       </ul>
-    </>
+    </section>
   );
 }

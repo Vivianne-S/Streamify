@@ -3,30 +3,30 @@ const BASE = import.meta.env.VITE_TMDB_BASE;
 const KEY = import.meta.env.VITE_TMDB_API_KEY;
 const IMG = import.meta.env.VITE_TMDB_IMG;
 
-/** 🔹 Generera ett slumpmässigt pris baserat på filmens popularitet */
+/** 🔹 Generate a pseudo-random price based on the movie's popularity */
 function generateMoviePrice(movieData) {
   const basePrice = 199; 
   
- //Öka priset baserat på betyg (0-10 blir 0-200)
+  // Increase price based on rating (0-10 -> 0-200)
   const ratingBonus = (movieData.vote_average || 5) * 20;
   
-// Öka priset baserat på popularitet (dividera med 10 för att undvika mycket höga priser)
+  // Increase price based on popularity (divide by 10 to avoid very large numbers)
   const popularityBonus = (movieData.popularity || 0) / 10;
   
-  // Prisökning om filmen är ny (filmer efter 2020)
+  // Extra charge for new movies (released 2020 or later)
   const releaseYear = new Date(movieData.release_date).getFullYear();
   const yearBonus = releaseYear >= 2020 ? 50 : 0;
   
- //Öka priset om filmen är en storfilm
+  // Extra if the movie is a blockbuster (many votes)
   const isBlockbuster = movieData.vote_count > 1000 ? 30 : 0;
   
   const totalPrice = basePrice + ratingBonus + popularityBonus + yearBonus + isBlockbuster;
   
-  // Avrunda till närmaste 9,99 (psykologisk prissättning)
+  // Round to nearest .99 (psychological pricing)
   return Math.floor(totalPrice / 10) * 10 - 0.01;
 }
 
-/** 🔹 Formaterar filmobjekt från TMDb till vårt eget schema */
+/** 🔹 Map TMDb movie object to our app's movie schema */
 function toMovie(dto) {
   console.log("Processing movie data:", dto);
   return {
@@ -42,12 +42,10 @@ function toMovie(dto) {
     runtime: dto.runtime, 
     genres: dto.genres || [], 
     price: generateMoviePrice(dto)
-    
-
   };
 }
 
-/** 🎬 Hämta populära filmer */
+/** 🎬 Fetches popular movies */
 export async function getPopularMovies(page = 1) {
   const res = await fetch(`${BASE}/movie/popular?api_key=${KEY}&language=en-US&page=${page}`);
   if (!res.ok) throw new Error("Failed to fetch popular movies");
@@ -55,7 +53,7 @@ export async function getPopularMovies(page = 1) {
   return data.results.map(toMovie);
 }
 
-/** 🏷️ Hämta lista över genrer */
+/** 🏷️ fetches list of genres */
 export async function getGenres() {
   const res = await fetch(`${BASE}/genre/movie/list?api_key=${KEY}&language=en-US`);
   if (!res.ok) throw new Error("Failed to fetch genres");
@@ -63,7 +61,7 @@ export async function getGenres() {
   return data.genres;
 }
 
-/** 🔸 Hämta filmer baserat på genre */
+/** 🔸 Fetches movies based on genre */
 export async function getMoviesByGenre(genreId, page = 1) {
   const res = await fetch(`${BASE}/discover/movie?api_key=${KEY}&language=en-US&with_genres=${genreId}&page=${page}`);
   if (!res.ok) throw new Error("Failed to fetch movies by genre");
@@ -71,7 +69,7 @@ export async function getMoviesByGenre(genreId, page = 1) {
   return data.results.map(toMovie);
 }
 
-/** 🎭 Hämta detaljer för en specifik film */
+/** 🎭 Fetches details from a specific movie */
 export async function getMovieDetails(movieId) {
   console.log("Fetching details for movie ID:", movieId);
   const url = `${BASE}/movie/${movieId}?api_key=${KEY}&language=en-US`;
@@ -88,10 +86,13 @@ export async function getMovieDetails(movieId) {
 // SEARCH FUNCTIONALITY PART
 /** 🔍 Search movies function */
 export async function searchMovies(query, { page = 1, locale = "en-US" } = {}) {
+  // Read API key from Vite env, if missing in the .env, throws an error.
   const KEY = import.meta.env.VITE_TMDB_API_KEY;
   if (!KEY) throw new Error("API key is missing");
+  //guard against empty/whitespace-only queries
   const q = (query ?? "").trim();
   if (!q) {
+    // Early exit: blank query → return TMDB-shaped empty payload to avoid null checks.
     return { page:1, total_pages:1, total_results:0, results: []};
   }
 
@@ -127,7 +128,7 @@ export async function searchMovies(query, { page = 1, locale = "en-US" } = {}) {
     page: data.page,
     total_pages: data.total_pages,
     total_results: data.total_results,
-    results: list.map(toMovie),
+    results: list.map(toMovie),     // ensure consistent shape for UI components
   };
 }
 // SEARCH FUNCTIONALITY PART END

@@ -45,7 +45,7 @@ function toMovie(dto) {
   };
 }
 
-/** 🎬 Hämta populära filmer */
+/** 🎬 Fetches popular movies */
 export async function getPopularMovies(page = 1) {
   const res = await fetch(`${BASE}/movie/popular?api_key=${KEY}&language=en-US&page=${page}`);
   if (!res.ok) throw new Error("Failed to fetch popular movies");
@@ -53,7 +53,7 @@ export async function getPopularMovies(page = 1) {
   return data.results.map(toMovie);
 }
 
-/** 🏷️ Hämta lista över genrer */
+/** 🏷️ fetches list of genres */
 export async function getGenres() {
   const res = await fetch(`${BASE}/genre/movie/list?api_key=${KEY}&language=en-US`);
   if (!res.ok) throw new Error("Failed to fetch genres");
@@ -61,7 +61,7 @@ export async function getGenres() {
   return data.genres;
 }
 
-/** 🔸 Hämta filmer baserat på genre */
+/** 🔸 Fetches movies based on genre */
 export async function getMoviesByGenre(genreId, page = 1) {
   const res = await fetch(`${BASE}/discover/movie?api_key=${KEY}&language=en-US&with_genres=${genreId}&page=${page}`);
   if (!res.ok) throw new Error("Failed to fetch movies by genre");
@@ -69,7 +69,7 @@ export async function getMoviesByGenre(genreId, page = 1) {
   return data.results.map(toMovie);
 }
 
-/** 🎭 Hämta detaljer för en specifik film */
+/** 🎭 Fetches details from a specific movie */
 export async function getMovieDetails(movieId) {
   console.log("Fetching details for movie ID:", movieId);
   const url = `${BASE}/movie/${movieId}?api_key=${KEY}&language=en-US`;

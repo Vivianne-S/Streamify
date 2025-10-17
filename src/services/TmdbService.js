@@ -86,10 +86,13 @@ export async function getMovieDetails(movieId) {
 // SEARCH FUNCTIONALITY PART
 /** 🔍 Search movies function */
 export async function searchMovies(query, { page = 1, locale = "en-US" } = {}) {
+  // Read API key from Vite env, if missing in the .env, throws an error.
   const KEY = import.meta.env.VITE_TMDB_API_KEY;
   if (!KEY) throw new Error("API key is missing");
+  //guard against empty/whitespace-only queries
   const q = (query ?? "").trim();
   if (!q) {
+    // Early exit: blank query → return TMDB-shaped empty payload to avoid null checks.
     return { page:1, total_pages:1, total_results:0, results: []};
   }
 
@@ -125,7 +128,7 @@ export async function searchMovies(query, { page = 1, locale = "en-US" } = {}) {
     page: data.page,
     total_pages: data.total_pages,
     total_results: data.total_results,
-    results: list.map(toMovie),
+    results: list.map(toMovie),     // ensure consistent shape for UI components
   };
 }
 // SEARCH FUNCTIONALITY PART END

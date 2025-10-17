@@ -1,7 +1,7 @@
 import { useCart } from "../context/CartContext";
 export default function CartList() {
    const { cartItems,removeFromCart } = useCart();
-   //Beräkning av filmpris
+   // Calculate total price of movies in the cart
    const totalPrice = cartItems.reduce((sum, item) => sum + (Number(item.price) || 0), 0);
   return (
      <aside className="cart-list">

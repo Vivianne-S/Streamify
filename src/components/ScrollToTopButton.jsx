@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { ArrowUp } from "lucide-react"; // snygg ikon, passar Streamify
+import { ArrowUp } from "lucide-react"; // Arrow icon from lucide-react, matches the app design
 import "../style/ScrollToTopButton.css";
 
 export default function ScrollToTopButton() {

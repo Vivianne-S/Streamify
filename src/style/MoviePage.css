@@ -408,8 +408,11 @@
   .searchbar button[type="submit"] {
     padding: 0.5rem 0.8rem;
     font-size: 0.95rem;
-=======
-/* === ADD TO CART ICON === */
+
+
+      }
+      
+  /* === ADD TO CART ICON === */
 .movie-card-wrapper {
   position: relative;
 }
@@ -491,4 +494,4 @@
     opacity: 0;
     transform: translateY(-10px) scale(0.95);
   }
-}
+}}
